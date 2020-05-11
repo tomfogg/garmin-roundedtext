@@ -13,26 +13,27 @@ font=$1
 fontname=$2
 fontsize=$3
 charlist=$4
-maxwidth=512
+maxwidth=256
 if test "$5" = "yes"; then
     addtrim=-trim
 fi
 
 # work out how much space there is at the top and bottom of the letters so we can trim it off later
-convert -page +0+0 -font $font -background black -fill white -pointsize $fontsize label:"$charlist" PNG8:max.png
+convert -page +0+0 -font $font -background black -fill white -pointsize $fontsize label:"A" PNG8:max.png
 size=$(identify max.png | awk '{sub("x"," ",$3); print $3}')
 fh=$(echo $size | awk '{print $2}')
 convert max.png -gravity north -background red -splice 0x5 PNG8:max.png
 convert max.png -trim +repage PNG8:max.png
 size=$(identify max.png | awk '{sub("x"," ",$3); print $3}')
 ht=$(echo $size | awk '{print $2}')
-toptrim=$((fh-ht-1))
+bottomtrim=$((fh-ht))
 convert max.png -gravity south -background red -splice 0x5 PNG8:max.png
 convert max.png -trim +repage PNG8:max.png
 size=$(identify max.png | awk '{sub("x"," ",$3); print $3}')
 hb=$(echo $size | awk '{print $2}')
-bottomtrim=$((fh-toptrim-hb))
-echo font height is $fh, space at top is $toptrim, space at bottom is $bottomtrim
+toptrim=$((fh-bottomtrim-hb))
+ch=$((fh-bottomtrim-toptrim))
+echo font height is $fh, space at top is $toptrim, space at bottom is $bottomtrim, cut height is $ch
 
 # create a max size of square the font will be
 convert -page +0+0 -font $font -background black -fill white -pointsize $fontsize label:"W" -trim -rotate 45 PNG8:max.png
