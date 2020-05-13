@@ -36,7 +36,7 @@ ch=$((fh-bottomtrim-toptrim))
 echo font height is $fh, space at top is $toptrim, space at bottom is $bottomtrim, cut height is $ch
 
 # create a max size of square the font will be
-convert -page +0+0 -font $font -background black -fill white -pointsize $fontsize label:"W" -trim -rotate 45 PNG8:max.png
+convert -page +0+0 -font $font -background black -fill white -pointsize $fontsize label:"W" -trim -rotate 42 PNG8:max.png
 # get the width and height
 size=$(identify max.png | awk '{sub("x"," ",$3); print $3}')
 w=$(echo $size | awk '{print $1}')
@@ -64,7 +64,7 @@ for a in $(seq -90 6 90); do
 
     # create the font definition file
     echo info face=$fontname size=$fontsize bold=0 italic=0 charset=ascii unicode=0 stretchH=100 smooth=1 aa=0 padding=0,0,0,0 spacing=0,0 outline=0 > $fn
-    echo common lineHeight=$fontsize base=$fontsize scaleW=256 scaleH=256 pages=1 packed=0 >> $fn
+    echo common lineHeight=$h base=$h scaleW=256 scaleH=256 pages=1 packed=0 >> $fn
     echo page id=0 file=\"${fontname}_$num.png\" >> $fn
     echo chars count=${#charlist} >> $fn
 
