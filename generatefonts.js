@@ -10,7 +10,7 @@ ${process.argv[1]} ../../myfont.ttf myfont 60C "A B C D E F SPACE STAR ( #" 6 13
 
 - character size determines the size of font used
     - 60C means size the font to fit 60 characters into the diameter of the watch face
-    - 3L means size the font to fit 3 lines of text in the radies of the watch face
+    - 3L means size the font to fit 3 lines of text in the radius of the watch face
 - degrees is the number of degrees to go clockwise on each rotation
     - larger values will use less memory but the angles the characters are at won't fit the circle as well, smaller values will look better but use more memory
 - radius is half with width of the watch face in pixels
